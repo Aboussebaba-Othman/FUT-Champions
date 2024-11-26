@@ -1,0 +1,181 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('./imgs/stadium_background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.stadium img {
+    position: relative;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.images {
+    width: 95%;
+    height: 100vh;
+}
+
+.card-items,
+.card-items1,
+.card-items2,
+.card-items3,
+.card-items4,
+.card-items5,
+.card-items6,
+.card-items7,
+.card-items8,
+.card-items9,
+.card-items10 {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(157, 151, 151, 0.632);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 7vw;
+    height: 20vh;
+}
+
+
+.card1 {
+    top: 25px;
+    left: 12%;
+}
+
+.card2 {
+    top: 25px;
+    left: 32%;
+}
+
+.card3 {
+    top: 20px;
+    left: 22%;
+}
+
+.card4 {
+    top: 200px;
+    left: 22%;
+}
+
+.card5 {
+    top: 170px;
+    left: 35%;
+}
+
+.card6 {
+    top: 170px;
+    left: 8%;
+}
+
+.card7 {
+    bottom: 130px;
+    left: 40%;
+}
+
+.card8 {
+    bottom: 130px;
+    left: 3%;
+}
+
+.card9 {
+    bottom: 90px;
+    left: 12%;
+}
+
+.card10 {
+    bottom: 90px;
+    left: 31%;
+}
+
+.card11 {
+    bottom: 40px;
+    left: 21.5%;
+}
+
+.sidbar form {
+    margin-top: -36px;
+    margin-left: 50px;
+    width: 90%;
+    background-color: rgba(0, 0, 0, 0.372);
+    padding: 10px;
+    border-radius: 10px;
+}
+section {
+    display: flex;
+}
+
+.fa-plus {
+    font-size: 30px;
+}
+
+
+
+@media screen and (max-width: 500px) {
+    section {
+        flex-wrap: wrap;
+    }
+
+    .card-items,
+    .card-items1,
+    .card-items2,
+    .card-items3,
+    .card-items4,
+    .card-items5,
+    .card-items6,
+    .card-items7,
+    .card-items8,
+    .card-items9,
+    .card-items10 {
+        width: 15vw;
+        height: 19vh;
+    }
+    .card1 {
+        left: 18%;
+    }
+    .card2 {
+        left: 62%;
+    }
+    .card3 {
+        left: 40%;
+    }
+    .card4{
+        top: 146px;
+        left: 41%;
+    }
+    .card5{
+        top: 135px;
+        left: 68%;
+    }
+    .card6{
+        top: 135px;
+        left: 10%;
+    }
+    .card7{
+        left: 74%;
+    }
+    .card8{
+        bottom: 135px;
+        left: 6%;
+    }
+    .card9{
+        bottom: 109px;
+        left: 24%;
+    }
+    .card10{
+        bottom: 109px;
+        left: 57%;
+    }.card11{
+        left: 40.5%;
+    }
+    
+    .sidbar form {
+        margin-top: 0;
+        margin-left: 0;
+        width: 100%;
+    }
+}
