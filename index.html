@@ -66,7 +66,8 @@
                                         </label>
                                         <input type="text" name="name" id="name" placeholder="Enter name"
                                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                    </div>
+                                    
+                                        </div>
                                 </div>
 
                                 <div class="w-full px-3 sm:w-1/2">
@@ -77,9 +78,9 @@
                                         </label>
 
                                     </div>
-                                    <select id="position" name="position" onchange="switchform()"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        
+                                    <select id="position" title="position-pla" name="position" onchange="switchForm()"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
                                         <option value="CB">Center Back (CB)</option>
                                         <option value="GK">Goalkeeper (GK)</option>
                                         <option value="LB">Left Back (LB)</option>
@@ -123,15 +124,7 @@
                                     </div>
                                 </div>
 
-                                <div class="w-full px-3 sm:w-1/2">
-                                    <div class="mb-5">
-                                        <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                            flag
-                                        </label>
-                                        <input type="text" name="flag" id="flag" placeholder="Enter flag"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                    </div>
-                                </div>
+
                                 <div class="w-full px-3 sm:w-1/2">
                                     <div class="mb-5">
                                         <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
@@ -163,40 +156,55 @@
 
                                     </div>
                                 </div>
-                                <div class="w-full px-3 sm:w-1/2">
-                                    <div class="mb-5">
-                                        <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                            photo
+                               
+                                <div class="flex items-center gap-16 justify-center mb-6">
+                                    <div class="w-1/6 flex flex-col items-center">
+                                        <label for="flag" class="mb-4 block text-base font-semibold text-white text-center">
+                                            Upload Flag
                                         </label>
-                                        <input type="text" name="photo" id="photo" placeholder="Enter photo"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                        <div id="flagPreview"
+                                            class="w-24 h-24 bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-400 rounded-md cursor-pointer"
+                                            onclick="document.getElementById('flag').click()">
+                                            <span class="text-gray-500 text-sm">No Flag</span>
+                                        </div>
+                                        <input type="file" name="flag" id="flag" accept="image/*" class="hidden"
+                                            onchange="previewPhoto(event, 'flagPreview')" />
+                                    </div>
+                                    <div class="w-1/6 flex flex-col items-center">
+                                        <label for="photo" class="mb-4 block text-base font-semibold text-white text-center">
+                                            Upload Photo
+                                        </label>
+                                        <div id="photoPreview"
+                                            class="w-24 h-24 bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-400 rounded-md cursor-pointer"
+                                            onclick="document.getElementById('photo').click()">
+                                            <span class="text-gray-500 text-sm">No Photo</span>
+                                        </div>
+                                        <input type="file" name="photo" id="photo" accept="image/*" class="hidden"
+                                            onchange="previewPhoto(event, 'photoPreview')" />
+                                    </div>
+                                    <div class="w-1/6 flex flex-col items-center">
+                                        <label for="logo" class="mb-4 block text-base font-semibold text-white text-center">
+                                            Upload Logo
+                                        </label>
+                                        <div id="logoPreview"
+                                            class="w-24 h-24 bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-400 rounded-md cursor-pointer"
+                                            onclick="document.getElementById('logo').click()">
+                                            <span class="text-gray-500 text-sm">No Logo</span>
+                                        </div>
+                                        <input type="file" name="logo" id="logo" accept="image/*" class="hidden"
+                                            onchange="previewPhoto(event, 'logoPreview')" />
                                     </div>
                                 </div>
-                                <div class="w-full px-3 sm:w-1/2">
-                                    <div class="mb-5">
-                                        <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                            logo
-                                        </label>
-                                        <input type="text" name="logo" id="logo" placeholder="Enter logo"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                    </div>
-                                </div>
-                                <div class="w-full px-3 sm:w-1/2">
-                                    <div class="mb-5">
-                                        <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                            rating
-                                        </label>
-                                        <input type="number" name="rating" id="rating" placeholder="Enter rating"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                    </div>
-                                </div>
-                                <div class="w-full px-3 sm:w-full hidden" id="palyer">
-                                    <div class="mb-5">
-                            
+                            </div>
+                                <div class="-mx-3 flex flex-wrap hidden" id="player">
+                                <div class="w-full px-3 sm:w-full">
+                                    <div class="mb-2">
+
                                         <div class="flex flex-wrap -mx-3">
                                             <div class="w-full px-3 sm:w-1/3">
                                                 <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                    <label
+                                                        class="mb-5 block text-base font-semibold text-white sm:text-sl">
                                                         Pace
                                                     </label>
                                                     <input type="number" name="pace" id="pace" placeholder="Enter pace"
@@ -205,7 +213,8 @@
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
                                                 <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                    <label
+                                                        class="mb-5 block text-base font-semibold text-white sm:text-sl">
                                                         Shooting
                                                     </label>
                                                     <input type="number" name="shooting" id="shooting"
@@ -215,21 +224,24 @@
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
                                                 <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                    <label
+                                                        class="mb-5 block text-base font-semibold text-white sm:text-sl">
                                                         Passing
                                                     </label>
-                                                    <input type="number" name="passing" id="passing" placeholder="Enter passing"
+                                                    <input type="number" name="passing" id="passing"
+                                                        placeholder="Enter passing"
                                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                
-                                    <div class="mb-5">
+
+                                    <div class="mb-2">
                                         <div class="flex flex-wrap -mx-3">
                                             <div class="w-full px-3 sm:w-1/3">
-                                                <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                <div class="mb-2">
+                                                    <label
+                                                        class="mb-2 block text-base font-semibold text-white sm:text-sl">
                                                         Dribbling
                                                     </label>
                                                     <input type="number" name="dribbling" id="dribbling"
@@ -238,8 +250,9 @@
                                                 </div>
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
-                                                <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                <div class="mb-2">
+                                                    <label
+                                                        class="mb-2 block text-base font-semibold text-white sm:text-sl">
                                                         Defending
                                                     </label>
                                                     <input type="number" name="defending" id="defending"
@@ -248,8 +261,9 @@
                                                 </div>
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
-                                                <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                <div class="mb-2">
+                                                    <label
+                                                        class="mb-2 block text-base font-semibold text-white sm:text-sl">
                                                         Physical
                                                     </label>
                                                     <input type="number" name="physical" id="physical"
@@ -260,14 +274,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="w-full px-3 sm:w-full hidden" id="Goalkeeper">
-                                    <div class="mb-5">
-                            
+                                <div class="w-full px-3 sm:w-1/3">
+                                    <div class="mb-2">
+                                        <label class="mb-2 block text-base font-semibold text-white sm:text-sl">
+                                            rating
+                                        </label>
+                                        <input type="number" name="rating" id="rating" placeholder="Enter rating"
+                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="-mx-3 flex flex-wrap hidden" id="goalkeeper">
+                                <div class="w-full px-3 sm:w-full">
+                                    <div class="mb-2">
+
                                         <div class="flex flex-wrap -mx-3">
                                             <div class="w-full px-3 sm:w-1/3">
                                                 <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                                        diving
+                                                    <label
+                                                        class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                        speed
                                                     </label>
                                                     <input type="number" name="pace" id="pace" placeholder="Enter pace"
                                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
@@ -275,8 +301,9 @@
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
                                                 <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                                        handling
+                                                    <label
+                                                        class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                        diving
                                                     </label>
                                                     <input type="number" name="shooting" id="shooting"
                                                         placeholder="Enter shooting"
@@ -285,22 +312,25 @@
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
                                                 <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                                        kicking
+                                                    <label
+                                                        class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                        handling
                                                     </label>
-                                                    <input type="number" name="passing" id="passing" placeholder="Enter passing"
+                                                    <input type="number" name="passing" id="passing"
+                                                        placeholder="Enter passing"
                                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                
-                                    <div class="mb-5">
+
+                                    <div class="mb-2">
                                         <div class="flex flex-wrap -mx-3">
                                             <div class="w-full px-3 sm:w-1/3">
-                                                <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                                        reflexes
+                                                <div class="mb-2">
+                                                    <label
+                                                        class="mb-2 block text-base font-semibold text-white sm:text-sl">
+                                                        kicking
                                                     </label>
                                                     <input type="number" name="dribbling" id="dribbling"
                                                         placeholder="Enter dribbling"
@@ -308,9 +338,10 @@
                                                 </div>
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
-                                                <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
-                                                        speed
+                                                <div class="mb-2">
+                                                    <label
+                                                        class="mb-2 block text-base font-semibold text-white sm:text-sl">
+                                                        reflexes
                                                     </label>
                                                     <input type="number" name="defending" id="defending"
                                                         placeholder="Enter defending"
@@ -318,8 +349,9 @@
                                                 </div>
                                             </div>
                                             <div class="w-full px-3 sm:w-1/3">
-                                                <div class="mb-5">
-                                                    <label class="mb-5 block text-base font-semibold text-white sm:text-sl">
+                                                <div class="mb-2">
+                                                    <label
+                                                        class="mb-2 block text-base font-semibold text-white sm:text-sl">
                                                         positioning
                                                     </label>
                                                     <input type="number" name="physical" id="physical"
@@ -330,20 +362,74 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="w-full px-3 sm:w-1/3">
+                                    <div class="mb-2">
+                                        <label class="mb-2 block text-base font-semibold text-white sm:text-sl">
+                                            rating
+                                        </label>
+                                        <input type="number" name="rating" id="rating" placeholder="Enter rating"
+                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    </div>
+                                </div>
                             </div>
+                            
+                            
                         </div>
 
                         <div>
-                            <button
+                            <button type="submit"
                                 class="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
                                 Add player
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
     </section>
+
+        <div class="lol">
+            <div class="fierst">
+                <div class="left">
+                    <p>89</p>
+                    <p>CF</p>
+                    <p>CF</p>
+                    <p>CF</p>
+                </div>
+                <div class="right">
+                    <img src="https://cdn.sofifa.net/players/158/023/25_120.png" alt="">
+                </div>
+            </div>
+            <div class="name">grizman</div>
+            <div class="nmbr">
+                <div class="lft">
+                   <span>21</span>
+                   <span>21</span>
+                   <span>21</span>
+                   <span>21</span>
+                   <span>21</span>
+                   <span>21</span>
+                </div>
+                <div class="rght">
+                    <span>21</span>
+                    <span>21</span>
+                    <span>21</span>
+                    <span>21</span>
+                    <span>21</span>
+                    <span>21</span>
+
+                </div>
+            </div>
+            
+        </div>
+
+	
+	
+
+	
+	</body>
+
     <script src="assets/main.js"></script>
 </body>
 
