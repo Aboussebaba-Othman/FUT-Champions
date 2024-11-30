@@ -13,9 +13,7 @@ function switchForm() {
     }
     
 }
-// fetch('./players.json')
-// .then(response => response.json())
-// .then(data =>>)
+
 function previewPhoto(event, previewId) {
     const file = event.target.files[0]; 
     const preview = document.getElementById(previewId); 
@@ -44,7 +42,6 @@ function validateForm(form) {
 
     let isValid = true;
 
-    // إزالة رسائل الخطأ السابقة
     [...form.elements].forEach(input => {
         const errorElement = input.nextElementSibling;
         if (errorElement && errorElement.classList.contains('error-message')) {
@@ -52,7 +49,6 @@ function validateForm(form) {
         }
     });
 
-    // التحقق من الحقول المطلوبة
     requiredFields.forEach(field => {
         const input = form.querySelector(`[name="${field}"]`);
         if (!input || !input.value.trim()) {
@@ -61,7 +57,7 @@ function validateForm(form) {
         }
     });
 
-    // التحقق من الحقول العددية
+   
     numberFields.forEach(field => {
         const input = form.querySelector(`[name="${field}"]`);
         const value = input ? input.value.trim() : null;
@@ -71,7 +67,7 @@ function validateForm(form) {
         }
     });
 
-    // عرض رسالة نجاح إذا كان التحقق صحيحاً
+   
     if (isValid) {
         const successMessage = document.getElementById('success-message');
         if (successMessage) {
@@ -79,7 +75,7 @@ function validateForm(form) {
             successMessage.style.color = 'green';
         }
     } else {
-        // إزالة أي رسالة نجاح إذا كان هناك خطأ
+        
         const successMessage = document.getElementById('success-message');
         if (successMessage) {
             successMessage.textContent = '';
@@ -104,16 +100,12 @@ function showError(input, message) {
 const cards = document.getElementsByClassName('.cards');
 document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', function (e) {
-        e.preventDefault(); // منع الإرسال الافتراضي للنموذج
-
-        // التحقق من صحة الحقول
+        e.preventDefault(); 
         if (validateForm(this)) {
             console.log('Form is valid');
             
             cards.classList.remove('hidden');
             updateCard();
-        } else {
-            console.log('Form is invalid. Fix errors before submission.');
         }
     });
 });
@@ -172,4 +164,80 @@ function updateCard() {
         reader.readAsDataURL(playerLogo);
     }
 }
+function addPlayerToField(form) {
+  
+    const formData = new FormData(form);
+    const playerData = Object.fromEntries(formData.entries());
+
+   
+    const template = document.getElementById('player-template');
+    const playerCard = template.cloneNode(true);
+
+   
+    playerCard.id = '';
+    template.classList.remove('hidden');
+
+    const playerPhoto = document.getElementById("photo").files[0];
+    const playerFlag = document.getElementById("flag").files[0];
+    const playerLogo = document.getElementById("logo").files[0];
+
+    const playerName = document.getElementById("name").value;
+    const position = document.getElementById("position").value;
+    const playerRating = document.getElementById("rating").value;
+    const playerPace = document.getElementById("pace").value;
+    const playerShooting = document.getElementById("shooting").value;
+    const playerPassing = document.getElementById("passing").value;
+    const playerDribbling = document.getElementById("dribbling").value;
+    const playerDefending = document.getElementById("defending").value;
+    const playerPhysical = document.getElementById("physical").value;
+
+
+    playerCard.querySelector('.photo').src = playerPhoto;
+    playerCard.querySelector('.rating').textContent = playerRating;
+    playerCard.querySelector('.position').textContent = position;
+    playerCard.querySelector('.name').textContent = playerName;
+    playerCard.querySelector('.pace').textContent = playerPace;
+    playerCard.querySelector('.shooting').textContent = playerShooting;
+    playerCard.querySelector('.passing').textContent = playerPassing;
+    playerCard.querySelector('.dribbling').textContent = playerDribbling;
+    playerCard.querySelector('.defending').textContent = playerDefending;
+    playerCard.querySelector('.physical').textContent = playerPhysical;
+    playerCard.querySelector('.flag').src = playerFlag;
+    playerCard.querySelector('.logo').src = playerLogo;
+
+    if (playerPhoto) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.querySelector(".photo").src = e.target.result;
+            
+        };
+        reader.readAsDataURL(playerPhoto);
+    }
+
+    if (playerFlag) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.querySelector(".flag").src = e.target.result;
+        };
+        reader.readAsDataURL(playerFlag);
+    }
+
+    if (playerLogo) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.querySelector(".logo").src = e.target.result;
+        };
+        reader.readAsDataURL(playerLogo);
+    }
+
+    const positionP = document.getElementById(`${playerData.position}`)
+
+    positionP.appendChild(playerCard);
+}
+
+document.getElementById('player-form').addEventListener('submit', function (e) {
+    e.preventDefault(); 
+    addPlayerToField(this); 
+    this.reset(); 
+});
 

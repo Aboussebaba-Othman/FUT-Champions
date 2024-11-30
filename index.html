@@ -14,49 +14,58 @@
 
 <body>
     <section id="std">
-        <div class="stadium">
-            <img src="./assets/imgs/stadium_background.webp" alt="stadium_background" class="images">
-            <div class="card">
-                <div class="card-items card1" data-position="LW">
-                    <i class="fa-solid fa-plus"></i>
+        <div class="stadium relative">
+            <img src="./assets/imgs/stadium_background.webp" alt="stadium_background" class="images object-cover w-full">
+            <div class="flex flex-col absolute top-0 w-full h-96 ">
+                <div class="flex justify-around">
+                <div class=" card1 w-28 h-[9.7rem]" id="LW">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items1 card2" data-position="RW">
-                    <i class="fa-solid fa-plus"></i>
+                <div class="card-items2 card3 w-28 h-[9.7rem]" id="ST">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items2 card3" data-position="CF">
-                    <i class="fa-solid fa-plus"></i>
+                <div class="card-items1 card2 w-28 h-[9.7rem]" id="RW">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items3 card4" data-position="CM">
-                    <i class="fa-solid fa-plus"></i>
+            </div>
+            <div class="flex justify-around">
+                <div class="card-items3 card4 w-28 h-[9.7rem]" id="CAM">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items4 card5" data-position="CM">
-                    <i class="fa-solid fa-plus"></i>
+                <div class="card-items4 card5 w-28 h-[9.7rem]" id="CDM">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items5 card6" data-position="CM">
-                    <i class="fa-solid fa-plus"></i>
+                <div class="card-items5 card6 w-28 h-[9.7rem]" id="CM">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items6 card7" data-position="RB">
-                    <i class="fa-solid fa-plus"></i>
+            </div>
+            <div class="flex justify-around">
+               
+                <div class="card-items7 card8 w-28 h-[9.7rem]" id="LB">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items7 card8" data-position="LB">
-                    <i class="fa-solid fa-plus"></i>
+                <div class="card-items8 card9 w-28 h-[9.7rem]" id="CB1">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items8 card9" data-position="CB">
-                    <i class="fa-solid fa-plus"></i>
+                <div class="card-items9 card10 w-28 h-[9.7rem]" id="CB2">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items9 card10" data-position="CB">
-                    <i class="fa-solid fa-plus"></i>
+                <div class="card-items6 card7 w-28 h-[9.7rem]" id="RB">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
-                <div class="card-items10 card11" data-position="GK">
-                    <i class="fa-solid fa-plus"></i>
+            </div>
+            <div class="flex justify-center items-end">
+                <div class="card-items10 card11 w-28 h-[9.7rem]" id="GK">
+                    <!-- <i class="fa-solid fa-plus"></i> -->
                 </div>
+            </div>
 
             </div>
         </div>
         <div>
             <div class="flex items-center justify-center p-12 xcss">
                 <div class="mx-auto w-full max-w-[550px] sidbar">
-                    <form>
+                    <form id="player-form">
                         <div class="mb-5 pt-3">
                             <div class="-mx-3 flex flex-wrap">
                                 <div class="w-full px-3 sm:w-1/2">
@@ -81,10 +90,13 @@
                                     <select id="position" title="position-pla" name="position" onchange="switchForm()"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
-                                        <option value="CB">Center Back (CB)</option>
+                                        <option value="CB1">Center Back (CB1)</option>
+                                        <option value="CB2">Center Back (CB2)</option>
                                         <option value="GK">Goalkeeper (GK)</option>
                                         <option value="LB">Left Back (LB)</option>
                                         <option value="RB">Right Back (RB)</option>
+                                        <option value="CAM">Central Midfielder (CAM)</option>
+                                        <option value="CDM">Central Midfielder (CDM)</option>
                                         <option value="CM">Central Midfielder (CM)</option>
                                         <option value="LW">Left Wing (LW)</option>
                                         <option value="RW">Right Wing (RW)</option>
@@ -388,46 +400,15 @@
             </div>
         </div>
     </section>
-
-        <!-- <div class="lol">
-            <div class="fierst">
-                <div class="left">
-                    <p class="rating">89</p>
-                    <p class="position">CF</p>
-                    <div class="logo"><img src="" alt=""></div>
-                    <div class="flag"><img src="" alt=""></div>
-                </div>
-                <div class="right">
-                    <img class="photo" src="" alt="">
-                </div>
-            </div>
-            <div class="name"></div>
-            <div class="nmbr">
-                <div class="lft">
-                   <span >DAC</span>
-                   <span >SHO</span>
-                   <span >PAS</span>
-                   <span >DRI</span>
-                   <span>DEF</span>
-                   <span >PHY</span>
-                </div>
-                <div class="rght">
-                    <span class="pace"></span>
-                    <span class="shooting"></span>
-                    <span class="passing"></span>
-                    <span class="dribbling"></span>
-                    <span class="defending"></span>
-                    <span class="physical"></span>
-
-                </div>
-            </div>
-            
-        </div> -->
+    <!-- <div class="flex" id="player-container">
+        <!-- بطاقات اللاعبين ستظهر هنا -->
+    </div> 
+       
 
 	
 	
-         <div class="relative w-28 h-[9.7rem]  cursor-pointer cards hidden">
-            <img src="./assets/imgs/badge_gold.webp" alt="" class="object-contain h-full w-full ">
+         <div class="relative w-28 h-[9.7rem]  cursor-pointer cards hidden" id="player-template">
+            <img src="./assets/imgs/badge_gold.webp" alt="" >
             <div class="absolute w-[60%] top-8 left-6"><img class=" photo" src="" alt=""></div>
             <div class="flex flex-col items-center text-sm justify-center absolute top-8 left-3">
                 <p class="rating">--</p>

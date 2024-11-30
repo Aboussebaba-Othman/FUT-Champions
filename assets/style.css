@@ -10,16 +10,15 @@ body {
 
 .stadium img {
     position: relative;
-    padding: 20px;
     border-radius: 5px;
 }
 
-.images {
+/* .images {
     width: 96%;
     height: 100vh;
-}
+} */
 
-.card-items,
+/* .card-items,
 .card-items1,
 .card-items2,
 .card-items3,
@@ -37,11 +36,12 @@ body {
     background-color: rgba(157, 151, 151, 0.632);
     border-radius: 5px;
     cursor: pointer;
-    width: 7vw;
+    width: 28px;
     height: 20vh;
 }
 
 .card1 {
+    position: absolute;
     top: 25px;
     left: 12%;
 }
@@ -94,7 +94,7 @@ body {
 .card11 {
     bottom: 40px;
     left: 21.5%;
-}
+} */
 
 .sidbar form {
     margin-top: -36px;
