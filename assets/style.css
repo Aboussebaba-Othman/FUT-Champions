@@ -293,8 +293,9 @@ section {
     font-size: 12px; /* حجم الخط */
 
     text-align: center; /* توسيط النص */
-    padding: 5px;
+    padding: 3px;
 }
+
 /*  */
 
 .player-card {
@@ -362,3 +363,4 @@ section {
     width: 20px;
     height: auto;
   }
+  

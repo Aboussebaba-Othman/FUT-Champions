@@ -13,6 +13,9 @@ function switchForm() {
     }
     
 }
+// fetch('./players.json')
+// .then(response => response.json())
+// .then(data =>>)
 function previewPhoto(event, previewId) {
     const file = event.target.files[0]; 
     const preview = document.getElementById(previewId); 
@@ -36,11 +39,12 @@ function previewPhoto(event, previewId) {
 
 
 function validateForm(form) {
-    const requiredFields = ['name', 'photo', 'flag'];
+    const requiredFields = ['name', 'photo', 'flag', 'logo'];
     const numberFields = ['rating', 'pace', 'shooting', 'passing', 'dribbling', 'defending', 'physical'];
 
     let isValid = true;
 
+    // إزالة رسائل الخطأ السابقة
     [...form.elements].forEach(input => {
         const errorElement = input.nextElementSibling;
         if (errorElement && errorElement.classList.contains('error-message')) {
@@ -48,35 +52,45 @@ function validateForm(form) {
         }
     });
 
-    // Validate required fields
+    // التحقق من الحقول المطلوبة
     requiredFields.forEach(field => {
-        const input = form[field];
-        if (!input.value.trim()) {
+        const input = form.querySelector(`[name="${field}"]`);
+        if (!input || !input.value.trim()) {
             showError(input, `${field} is required.`);
             isValid = false;
         }
     });
 
-    // Validate number fields
+    // التحقق من الحقول العددية
     numberFields.forEach(field => {
-        const input = form[field];
-        const value = input.value.trim();
-        if (!value || isNaN(value) || value < 0 || value > 100) {
-            showError(input, `${field} must be a number between 0 and 100.`);
+        const input = form.querySelector(`[name="${field}"]`);
+        const value = input ? input.value.trim() : null;
+        if (!value || isNaN(value) || value < 10 || value > 100) {
+            showError(input, `${field} not valid`);
             isValid = false;
         }
     });
 
+    // عرض رسالة نجاح إذا كان التحقق صحيحاً
     if (isValid) {
         const successMessage = document.getElementById('success-message');
-        successMessage.textContent = 'Player added successfully!';
-        successMessage.style.color = 'green';
+        if (successMessage) {
+            successMessage.textContent = 'Player added successfully!';
+            successMessage.style.color = 'green';
+        }
+    } else {
+        // إزالة أي رسالة نجاح إذا كان هناك خطأ
+        const successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            successMessage.textContent = '';
+        }
     }
 
     return isValid;
 }
 
 function showError(input, message) {
+    if (!input) return; 
     let errorElement = input.nextElementSibling;
     if (!errorElement || !errorElement.classList.contains('error-message')) {
         errorElement = document.createElement('span');
@@ -87,54 +101,75 @@ function showError(input, message) {
     }
     errorElement.textContent = message;
 }
-
+const cards = document.getElementsByClassName('.cards');
 document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', function (e) {
-        e.preventDefault();
+        e.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+        // التحقق من صحة الحقول
         if (validateForm(this)) {
-            this.submit();
+            console.log('Form is valid');
+            
+            cards.classList.remove('hidden');
+            updateCard();
+        } else {
+            console.log('Form is invalid. Fix errors before submission.');
         }
     });
 });
 
 
-function addPlayer() {
-    const name = document.getElementsByClassName("name").value.trim();
-    const position = document.getElementById("playerPosition").value;
-    const pace = document.getElementById("pace").value;
-    const shooting = document.getElementById("shooting").value;
-    const imageInput = document.getElementById("uploadImage");
-    const imageFile = imageInput.files[0];
 
-   
-    if (!name || !position || !pace || !shooting || !imageFile) {
-        alert("Please fill out all fields!");
-        return;
+function updateCard() {
+    // Get input values
+    
+    const playerName = document.getElementById("name").value;
+    const position = document.getElementById("position").value;
+    const playerRating = document.getElementById("rating").value;
+    const playerPace = document.getElementById("pace").value;
+    const playerShooting = document.getElementById("shooting").value;
+    const playerPassing = document.getElementById("passing").value;
+    const playerDribbling = document.getElementById("dribbling").value;
+    const playerDefending = document.getElementById("defending").value;
+    const playerPhysical = document.getElementById("physical").value;
+
+
+    document.querySelector(".name").textContent = playerName;
+    document.querySelector(".position").textContent = position;
+    document.querySelector(".rating").textContent = playerRating;
+    document.querySelector(".pace").textContent = playerPace;
+    document.querySelector(".shooting").textContent = playerShooting;
+    document.querySelector(".passing").textContent = playerPassing;
+    document.querySelector(".dribbling").textContent = playerDribbling;
+    document.querySelector(".defending").textContent = playerDefending;
+    document.querySelector(".physical").textContent = playerPhysical;
+
+    const playerPhoto = document.getElementById("photo").files[0];
+    const playerFlag = document.getElementById("flag").files[0];
+    const playerLogo = document.getElementById("logo").files[0];
+
+    if (playerPhoto) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.querySelector(".photo").src = e.target.result;
+        };
+        reader.readAsDataURL(playerPhoto);
     }
-    const playersList = document.getElementById("playersList");
-    const playerCard = document.createElement("div");
-    playerCard.className =
-        "bg-gray-800 p-4 rounded-md shadow-md flex items-center gap-4";
 
-  
-    const reader = new FileReader();
-    reader.onload = function (event) {
-        const playerImage = document.createElement("img");
-        playerImage.src = event.target.result;
-        playerImage.alt = name;
-        playerImage.className = "w-16 h-16 rounded-md";
-        playerCard.appendChild(playerImage);
-    };
-    reader.readAsDataURL(imageFile);
-    const playerInfo = document.createElement("div");
-    playerInfo.className = "text-white";
-    playerInfo.innerHTML = `
-        <h3 class="font-bold">${name}</h3>
-        <p>Position: ${position}</p>
-        <p>Pace: ${pace}</p>
-        <p>Shooting: ${shooting}</p>
-    `;
-    playerCard.appendChild(playerInfo);
-    playersList.appendChild(playerCard);
-    document.getElementById("playerForm").reset();
+    if (playerFlag) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.querySelector(".flag").src = e.target.result;
+        };
+        reader.readAsDataURL(playerFlag);
+    }
+
+    if (playerLogo) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.querySelector(".logo").src = e.target.result;
+        };
+        reader.readAsDataURL(playerLogo);
+    }
 }
+

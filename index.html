@@ -17,37 +17,37 @@
         <div class="stadium">
             <img src="./assets/imgs/stadium_background.webp" alt="stadium_background" class="images">
             <div class="card">
-                <div class="card-items card1">
+                <div class="card-items card1" data-position="LW">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items1 card2">
+                <div class="card-items1 card2" data-position="RW">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items2 card3">
+                <div class="card-items2 card3" data-position="CF">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items3 card4">
+                <div class="card-items3 card4" data-position="CM">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items4 card5">
+                <div class="card-items4 card5" data-position="CM">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items5 card6">
+                <div class="card-items5 card6" data-position="CM">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items6 card7">
+                <div class="card-items6 card7" data-position="RB">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items7 card8">
+                <div class="card-items7 card8" data-position="LB">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items8 card9">
+                <div class="card-items8 card9" data-position="CB">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items9 card10">
+                <div class="card-items9 card10" data-position="CB">
                     <i class="fa-solid fa-plus"></i>
                 </div>
-                <div class="card-items10 card11">
+                <div class="card-items10 card11" data-position="GK">
                     <i class="fa-solid fa-plus"></i>
                 </div>
 
@@ -160,7 +160,7 @@
                                 <div class="flex items-center gap-16 justify-center mb-6">
                                     <div class="w-1/6 flex flex-col items-center">
                                         <label for="flag" class="mb-4 block text-base font-semibold text-white text-center">
-                                            Upload Flag
+                                             Flag
                                         </label>
                                         <div id="flagPreview"
                                             class="w-24 h-24 bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-400 rounded-md cursor-pointer"
@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="w-1/6 flex flex-col items-center">
                                         <label for="photo" class="mb-4 block text-base font-semibold text-white text-center">
-                                            Upload Photo
+                                             Photo
                                         </label>
                                         <div id="photoPreview"
                                             class="w-24 h-24 bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-400 rounded-md cursor-pointer"
@@ -184,7 +184,7 @@
                                     </div>
                                     <div class="w-1/6 flex flex-col items-center">
                                         <label for="logo" class="mb-4 block text-base font-semibold text-white text-center">
-                                            Upload Logo
+                                             Logo
                                         </label>
                                         <div id="logoPreview"
                                             class="w-24 h-24 bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-gray-400 rounded-md cursor-pointer"
@@ -373,61 +373,155 @@
                                 </div>
                             </div>
                             
-                            
                         </div>
 
                         <div>
                             <button type="submit"
+                            onclick="updateCard()"
                                 class="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
                                 Add player
                             </button>
                         </div>
+                        <div id="success-message"></div>
                     </form>
-
                 </div>
             </div>
         </div>
     </section>
 
-        <div class="lol">
+        <!-- <div class="lol">
             <div class="fierst">
                 <div class="left">
-                    <p>89</p>
-                    <p>CF</p>
-                    <p>CF</p>
-                    <p>CF</p>
+                    <p class="rating">89</p>
+                    <p class="position">CF</p>
+                    <div class="logo"><img src="" alt=""></div>
+                    <div class="flag"><img src="" alt=""></div>
                 </div>
                 <div class="right">
-                    <img src="https://cdn.sofifa.net/players/158/023/25_120.png" alt="">
+                    <img class="photo" src="" alt="">
                 </div>
             </div>
-            <div class="name">grizman</div>
+            <div class="name"></div>
             <div class="nmbr">
                 <div class="lft">
-                   <span>21</span>
-                   <span>21</span>
-                   <span>21</span>
-                   <span>21</span>
-                   <span>21</span>
-                   <span>21</span>
+                   <span >DAC</span>
+                   <span >SHO</span>
+                   <span >PAS</span>
+                   <span >DRI</span>
+                   <span>DEF</span>
+                   <span >PHY</span>
                 </div>
                 <div class="rght">
-                    <span>21</span>
-                    <span>21</span>
-                    <span>21</span>
-                    <span>21</span>
-                    <span>21</span>
-                    <span>21</span>
+                    <span class="pace"></span>
+                    <span class="shooting"></span>
+                    <span class="passing"></span>
+                    <span class="dribbling"></span>
+                    <span class="defending"></span>
+                    <span class="physical"></span>
 
                 </div>
             </div>
             
+        </div> -->
+
+	
+	
+         <div class="relative w-28 h-[9.7rem]  cursor-pointer cards hidden">
+            <img src="./assets/imgs/badge_gold.webp" alt="" class="object-contain h-full w-full ">
+            <div class="absolute w-[60%] top-8 left-6"><img class=" photo" src="" alt=""></div>
+            <div class="flex flex-col items-center text-sm justify-center absolute top-8 left-3">
+                <p class="rating">--</p>
+                <p class="position">--</p>
+            </div>
+            <div class=" flex flex-col absolute bottom-6 left-0 " >
+                <div class="text-center  name"><p>------</p></div>
+                <div class="flex gap-1 justify-center items-center w-28 text-[5px]">
+                    <div class="flex flex-col items-center justify-center ">
+                        <p>PAC</p>
+                        <p class="pace">--</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <p>SHO</p>
+                        <p class="shooting">--</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <p>PAS</p>
+                        <p class="passing">--</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <p>DRI</p>
+                        <p class="dribbling">--</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <p>DEF</p>
+                        <p class="defending">--</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <p>PHY</p>
+                        <p class="physical">--</p>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="flex absolute flex-col top-9 right-3">
+                <div class="mb-1">
+                    <img src="" alt="" class="w-5 flag">
+                </div>
+                <div class="">
+                    <img src="" alt="" class="w-5 logo">
+                </div>
+            </div>
+            <div class="absolute -right-4 top-3" > 
+                <div class="cursor-pointer text-[rgb(247,231,195)]"  onclick="edit()">
+                    <i class="fa-solid fa-pen-to-square" ></i>
+                </div>
+                <div class="cursor-pointer text-[#F7E7C3]" data-info="action-btn" onclick="delet()">
+                    <i class="fa-solid fa-trash" data-info="action-icon"></i>
+                </div>
+            </div>
+        </div> 
+	<!-- بطاقة اللاعب الجديدة -->
+<!-- <div id="player-card-template" class="hidden">
+    <div class="relative w-28 h-[9.7rem] cursor-pointer cards">
+        <img src="./assets/imgs/badge_gold.webp" alt="" class="object-contain h-full w-full">
+        <div class="absolute w-[60%] top-8 left-6">
+            <img src="" alt="player-image" class="player-img">
         </div>
-
-	
-	
-
-	
+        <div class="flex flex-col items-center text-sm justify-center absolute top-8 left-3">
+            <p class="player-rating">--</p>
+            <p class="player-position">GK</p>
+        </div>
+        <div class="flex flex-col absolute bottom-6 left-0">
+            <div class="text-center"><p class="player-name">------</p></div>
+            <div class="flex gap-1 justify-center items-center w-28 text-[5px]">
+                <div class="flex flex-col items-center justify-center">
+                    <p>PAC</p>
+                    <p class="player-pac">--</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p>SHO</p>
+                    <p class="player-sho">--</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p>PAS</p>
+                    <p class="player-pas">--</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p>DRI</p>
+                    <p class="player-dri">--</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p>DEF</p>
+                    <p class="player-def">--</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <p>PHY</p>
+                    <p class="player-phy">--</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 	</body>
 
     <script src="assets/main.js"></script>
