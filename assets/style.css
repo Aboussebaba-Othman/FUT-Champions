@@ -13,90 +13,6 @@ body {
     border-radius: 5px;
 }
 
-/* .images {
-    width: 96%;
-    height: 100vh;
-} */
-
-/* .card-items,
-.card-items1,
-.card-items2,
-.card-items3,
-.card-items4,
-.card-items5,
-.card-items6,
-.card-items7,
-.card-items8,
-.card-items9,
-.card-items10 {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(157, 151, 151, 0.632);
-    border-radius: 5px;
-    cursor: pointer;
-    width: 28px;
-    height: 20vh;
-}
-    
-
-.card1 {
-    position: absolute;
-    top: 25px;
-    left: 12%;
-}
-
-.card2 {
-    top: 25px;
-    left: 32%;
-}
-
-.card3 {
-    top: 20px;
-    left: 22%;
-}
-
-.card4 {
-    top: 200px;
-    left: 22%;
-}
-
-.card5 {
-    top: 170px;
-    left: 35%;
-}
-
-.card6 {
-    top: 170px;
-    left: 8%;
-}
-
-.card7 {
-    bottom: 130px;
-    left: 40%;
-}
-
-.card8 {
-    bottom: 130px;
-    left: 3%;
-}
-
-.card9 {
-    bottom: 90px;
-    left: 12%;
-}
-
-.card10 {
-    bottom: 90px;
-    left: 31%;
-}
-
-.card11 {
-    bottom: 40px;
-    left: 21.5%;
-} */
-
 .sidbar form {
     margin-top: -36px;
     margin-left: 50px;
@@ -127,39 +43,44 @@ section {
     top: 13%;
     left: 36px;
 }
-/* .player-image{
-    position: absolute;
-    width: 8.9vw;
-    height: 15vh;
-    top: 33px;
-    left: 13px;
-}
-.name{
-    position: absolute;
-    top:  118px;
-    left: 46px;
-}
-.rating{
-    position: absolute;
-    top: 38px;
-    left: 18px;
-}
-.position{
-    position: absolute;
-    top: 55px;
-    left: 18px;
-}
-.stats{
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    
-} */
-@media screen and (max-width: 500px) {
+
+@media screen and (max-width: 430px) {
+    body{
+        width: 170vw;
+    }
+    nav{
+        width: 170vw;
+    }
     section {
         flex-wrap: wrap;
+        width: 170vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .divForm{
+        position: relative;
+        right: 3%;
+    }
+    .images{
+        gap: 2rem;
+    }
+    .icons{
+        font-size: 20px;
+        margin-bottom: 10px;
+        
     }
 
-   
+}
+@media screen and (max-width: 375px) {
+    .stadium .images{
+        height: 150vh;
+    }
+}
+@media screen and (max-width: 320px) {
+    .stadium .images{
+        height: 120vh;
+    }
 }
 
   

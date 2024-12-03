@@ -1,17 +1,22 @@
+let playerCounter = 1;
+let currentEditPlayerId = null; 
 
 function switchForm() {
     const position = document.getElementById('position').value;
-    const playerFields = document.getElementById('player'); 
-    const goalkeeperFields = document.getElementById('goalkeeper'); 
-    
+    const playerFields = document.getElementById('player');
+    const goalkeeperFields = document.getElementById('goalkeeper');
+
+    document.querySelectorAll('.error-message').forEach(error => {
+        error.textContent = '';
+    });
+
     if (position === 'GK') {
-        playerFields.classList.add('hidden'); 
-        goalkeeperFields.classList.remove('hidden'); 
+        playerFields.classList.add('hidden');
+        goalkeeperFields.classList.remove('hidden');
     } else {
-        playerFields.classList.remove('hidden'); 
-        goalkeeperFields.classList.add('hidden'); 
+        playerFields.classList.remove('hidden');
+        goalkeeperFields.classList.add('hidden');
     }
-    
 }
 
 function previewPhoto(event, previewId) {
@@ -23,281 +28,271 @@ function previewPhoto(event, previewId) {
         : '<span class="text-gray-500 text-sm">No Image</span>';
 }
 
-
 function validateForm(form) {
-    const requiredFields = ['name', 'photo', 'flag', 'logo'];
-    const numberFields = ['rating', 'pace', 'shooting', 'passing', 'dribbling', 'defending', 'physical'];
-    const numberGaol = ['ratingGoal','diving','handling','kicking','reflexes','speed','positioning'];
+    const requiredFields = ['name', 'flag', 'photo', 'logo'];
+    const numberFields = ['rating', 'pace', 'shooting', 'passing', 'dribbling', 'defending', 'physical', 'speed', 'diving', 'handling', 'kicking', 'reflexes', 'positioning', 'ratingGk'];
 
     let isValid = true;
-    [...form.elements].forEach(input => {
-        const errorElement = input.nextElementSibling;
-        if (errorElement && errorElement.classList.contains('error-message')) {
-            errorElement.textContent = '';
-        }
+
+    form.querySelectorAll('.error-message').forEach(error => {
+        error.textContent = '';
     });
 
+    // Check required fields
     requiredFields.forEach(field => {
         const input = form.querySelector(`[name="${field}"]`);
-        if (!input || !input.value.trim()) {
-            showError(input, `${field} is required.`);
-            isValid = false;
+        if (input) {
+            if (input.type === 'file') {
+                if (!currentEditPlayerId && !input.files.length) { 
+                    showError(input, `${capitalize(field)} is required.`);
+                    isValid = false;
+                }
+            } else {
+                if (!input.value.trim()) {
+                    showError(input, `${capitalize(field)} is required.`);
+                    isValid = false;
+                }
+            }
         }
     });
 
-   
     numberFields.forEach(field => {
         const input = form.querySelector(`[name="${field}"]`);
-        const value = input ? input.value.trim() : null;
-        if (!value || isNaN(value) || value < 10 || value > 100) {
-            showError(input, `${field} not valid`);
-            isValid = false;
+        if (input && !input.closest('.hidden')) { 
+            const value = input.value.trim();
+            if (!value || isNaN(value) || value < 10 || value > 100) {
+                showError(input, `${capitalize(field)} must be a number between 10 and 100.`);
+                isValid = false;
+            }
         }
     });
-    numberGaol.forEach(field => {
-        const input = form.querySelector(`[name="${field}"]`);
-        const value = input ? input.value.trim() : null;
-        if (!value || isNaN(value) || value < 10 || value > 100) {
-            showError(input, `${field} not valid`);
-            isValid = false;
-        }
-    });
-
-   
-    if (isValid) {
-        const successMessage = document.getElementById('success-message');
-        if (successMessage) {
-            successMessage.textContent = 'Player added successfully!';
-            successMessage.style.color = 'green';
-        }
-    } else {
-        
-        const successMessage = document.getElementById('success-message');
-        if (successMessage) {
-            successMessage.textContent = '';
-        }
-    }
 
     return isValid;
 }
 
 function showError(input, message) {
-    if (!input) return; 
-    let errorElement = input.nextElementSibling;
-    if (!errorElement || !errorElement.classList.contains('error-message')) {
-        errorElement = document.createElement('span');
-        errorElement.classList.add('error-message');
-        errorElement.style.color = 'red';
-        errorElement.style.fontSize = '12px';
-        input.parentNode.insertBefore(errorElement, input.nextSibling);
+    const errorElement = input.parentElement.querySelector('.error-message');
+    if (errorElement) {
+        errorElement.textContent = message;
     }
-    errorElement.textContent = message;
 }
-const cards = document.getElementsByClassName('.cards');
-document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('submit', function (e) {
-        e.preventDefault(); 
-        if (validateForm(this)) {
-            console.log('Form is valid');
-            
-            cards.classList.remove('hidden');
-        }
-    });
-});
 
-
-function addPlayerToField(form) {
-
-    // if (!validateForm(form)){
-    //     return;
-    // };
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+function addOrUpdatePlayer(form) {
     const formData = new FormData(form);
     const playerData = Object.fromEntries(formData.entries());
 
-    const template = document.getElementById('player-template');
-
-    const playerCard = template.cloneNode(true);
-    playerCard.id = ''; 
-    playerCard.classList.remove('hidden');
-
-    playerCard.querySelector('.rating').textContent = playerData.rating;
-    playerCard.querySelector('.position').textContent = playerData.position;
-    playerCard.querySelector('.name').textContent = playerData.name;
-    playerCard.querySelector('.pace').textContent = playerData.pace;
-    playerCard.querySelector('.shooting').textContent = playerData.shooting;
-    playerCard.querySelector('.passing').textContent = playerData.passing;
-    playerCard.querySelector('.dribbling').textContent = playerData.dribbling;
-    playerCard.querySelector('.defending').textContent = playerData.defending;
-    playerCard.querySelector('.physical').textContent = playerData.physical;
-
-    const photoInput = form.querySelector('[name="photo"]');
-    if (photoInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            playerCard.querySelector('.photo').src = e.target.result;
-        };
-        reader.readAsDataURL(photoInput.files[0]);
+    let template;
+    if (playerData.position === 'GK') {
+        template = document.getElementById('goalkeeper-template');
+    } else {
+        template = document.getElementById('player-template');
     }
 
-    const flagInput = form.querySelector('[name="flag"]');
-    if (flagInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
+    let playerCard;
+    if (currentEditPlayerId) {
+        playerCard = document.getElementById(currentEditPlayerId);
+        const oldPosition = playerCard.parentElement.id;
+        if (oldPosition !== playerData.position) {
+            const newPositionContainer = document.getElementById(playerData.position);
+            newPositionContainer.appendChild(playerCard);
+        }
+    } else {
+        playerCard = template.cloneNode(true);
+        playerCard.classList.remove('hidden');
+        playerCard.removeAttribute('id');
+
+        const playerId = `player-${playerCounter++}`;
+        playerCard.setAttribute('id', playerId);
+    }
+
+    playerCard.setAttribute('data-nationality', playerData.nationality);
+    playerCard.setAttribute('data-club', playerData.club);
+
+    playerCard.querySelector('.name').textContent = playerData.name;
+    playerCard.querySelector('.position').textContent = playerData.position;
+
+    if (playerData.position !== 'GK') {
+        playerCard.querySelector('.rating').textContent = playerData.rating;
+        playerCard.querySelector('.pace').textContent = playerData.pace;
+        playerCard.querySelector('.shooting').textContent = playerData.shooting;
+        playerCard.querySelector('.passing').textContent = playerData.passing;
+        playerCard.querySelector('.dribbling').textContent = playerData.dribbling;
+        playerCard.querySelector('.defending').textContent = playerData.defending;
+        playerCard.querySelector('.physical').textContent = playerData.physical;
+    } else {
+        playerCard.querySelector('.ratingGk').textContent = playerData.ratingGk;
+        playerCard.querySelector('.speed').textContent = playerData.speed;
+        playerCard.querySelector('.diving').textContent = playerData.diving;
+        playerCard.querySelector('.positioning').textContent = playerData.positioning;
+        playerCard.querySelector('.handling').textContent = playerData.handling;
+        playerCard.querySelector('.kicking').textContent = playerData.kicking;
+        playerCard.querySelector('.reflexes').textContent = playerData.reflexes;
+    }
+
+    const photoFile = form.querySelector('[name="photo"]').files[0];
+    const flagFile = form.querySelector('[name="flag"]').files[0];
+    const logoFile = form.querySelector('[name="logo"]').files[0];
+
+    if (flagFile) {
+        const flagReader = new FileReader();
+        flagReader.onload = function (e) {
             playerCard.querySelector('.flag').src = e.target.result;
         };
-        reader.readAsDataURL(flagInput.files[0]);
+        flagReader.readAsDataURL(flagFile);
     }
 
-    const logoInput = form.querySelector('[name="logo"]');
-    if (logoInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
+    if (photoFile) {
+        const photoReader = new FileReader();
+        photoReader.onload = function (e) {
+            playerCard.querySelector('.photo').src = e.target.result;
+        };
+        photoReader.readAsDataURL(photoFile);
+    }
+
+    if (logoFile) {
+        const logoReader = new FileReader();
+        logoReader.onload = function (e) {
             playerCard.querySelector('.logo').src = e.target.result;
         };
-        reader.readAsDataURL(logoInput.files[0]);
+        logoReader.readAsDataURL(logoFile);
     }
 
-    const positionElement = document.getElementById(playerData.position);
-    if (positionElement) {
-        positionElement.innerHTML = ''; 
-        positionElement.appendChild(playerCard);
-    } else {
-        console.error(`Position element with ID "${playerData.position}" not found.`);
+    const positionContainer = document.getElementById(playerData.position);
+
+    if (!currentEditPlayerId) {
+        if (positionContainer.childElementCount > 0) {
+            const substituteContainer = document.getElementById('substitute');
+            substituteContainer.appendChild(playerCard);
+        } else {
+            positionContainer.appendChild(playerCard);
+        }
     }
-    // const positionElement = document.getElementById(playerData.position);
-    // if (positionElement && positionElement.children.length === 0) {
-    //     positionElement.appendChild(playerCard);
-    // } else {
-    //     const reserveList = document.getElementById('reserve-list');
-    //     reserveList.appendChild(playerCard);
-    // }
-    
+
+    resetForm(form);
+    resetPreviews();
+    currentEditPlayerId = null;
+
+    form.querySelector('button[type="submit"]').textContent = 'Add Player';
+
+    showSuccessMessage('Player added successfully!');
 }
 
+
+
+function resetForm(form) {
+    form.reset();
+    switchForm(); 
+    form.querySelectorAll('.error-message').forEach(error => {
+        error.textContent = '';
+    });
+}
+
+function resetPreviews() {
+    resetPreview('photoPreview', 'No Photo');
+    resetPreview('logoPreview', 'No Logo');
+    resetPreview('flagPreview', 'No Flag');
+}
+
+function resetPreview(previewId, defaultText) {
+    const previewElement = document.getElementById(previewId);
+    previewElement.innerHTML = `<span class="text-gray-500 text-sm">No ${defaultText}</span>`;
+}
+
+function showSuccessMessage(message) {
+    const successMessage = document.getElementById('success-message');
+    successMessage.textContent = message;
+    setTimeout(() => {
+        successMessage.textContent = '';
+    }, 3000);
+}
 
 document.getElementById('player-form').addEventListener('submit', function (e) {
     e.preventDefault();
-
-    addPlayerToField(this);
-
-    this.reset();
-
-    const photoInput = this.querySelector('[name="photo"]');
-    const flagInput = this.querySelector('[name="flag"]');
-    const logoInput = this.querySelector('[name="logo"]');
-    if (photoInput) photoInput.value = '';
-    if (flagInput) flagInput.value = '';
-    if (logoInput) logoInput.value = '';
+    if (validateForm(this)) {
+        addOrUpdatePlayer(this);
+    } else {
+        alert('Please fill all required fields and enter valid values.');
+    }
 });
 
-function delet(playerCard) {
-    playerCard.querySelector('.rating').textContent = '--';
-    playerCard.querySelector('.position').textContent = '--';
-    playerCard.querySelector('.name').textContent = '------';
-    playerCard.querySelector('.pace').textContent = '--';
-    playerCard.querySelector('.shooting').textContent = '--';
-    playerCard.querySelector('.passing').textContent = '--';
-    playerCard.querySelector('.dribbling').textContent = '--';
-    playerCard.querySelector('.defending').textContent = '--';
-    playerCard.querySelector('.physical').textContent = '--';
+function deletePlayer(element) {
+    if (confirm('Are you sure you want to delete this player?')) {
+        const playerCard = element.closest('.cards');
+        playerCard.remove();
 
-    playerCard.querySelector('.photo').src = '';
-    playerCard.querySelector('.flag').src = '';
-    playerCard.querySelector('.logo').src = '';
-
-    
-}
-function handleDelete(event) {
-    const playerCard = event.target.closest('.cards');
-    delet(playerCard);
+        showSuccessMessage('Player deleted successfully!');
+    }
 }
 
-
-function editCard(event) {
-    // العثور على البطاقة المستهدفة
-    const playerCard = event.target.closest('.cards');
-
-    // تحديد النموذج
+function editPlayer(element) {
+    const playerCard = element.closest('.cards');
+    currentEditPlayerId = playerCard.id;
     const form = document.getElementById('player-form');
 
-    // تعبئة الحقول داخل النموذج بالقيم الموجودة في البطاقة
-    form.querySelector('[name="name"]').value = playerCard.querySelector('.name').textContent;
-    form.querySelector('[name="rating"]').value = playerCard.querySelector('.rating').textContent;
-    form.querySelector('[name="position"]').value = playerCard.querySelector('.position').textContent;
-    form.querySelector('[name="pace"]').value = playerCard.querySelector('.pace').textContent;
-    form.querySelector('[name="shooting"]').value = playerCard.querySelector('.shooting').textContent;
-    form.querySelector('[name="passing"]').value = playerCard.querySelector('.passing').textContent;
-    form.querySelector('[name="dribbling"]').value = playerCard.querySelector('.dribbling').textContent;
-    form.querySelector('[name="defending"]').value = playerCard.querySelector('.defending').textContent;
-    form.querySelector('[name="physical"]').value = playerCard.querySelector('.physical').textContent;
 
-    // الصور (تحتاج إلى أن تكون موجودة على هيئة ملفات إذا أردت عرضها مرة أخرى)
-    const photoPreview = document.getElementById('photo-preview'); 
-    const flagPreview = document.getElementById('flag-preview'); 
-    const logoPreview = document.getElementById('logo-preview'); 
+    form.querySelector('[name="name"]').value = playerCard.querySelector('.name').textContent.trim();
+    form.querySelector('[name="position"]').value = playerCard.querySelector('.position').textContent.trim();
+    switchForm(); 
 
-    photoPreview.innerHTML = playerCard.querySelector('.photo').outerHTML;
-    flagPreview.innerHTML = playerCard.querySelector('.flag').outerHTML;
-    logoPreview.innerHTML = playerCard.querySelector('.logo').outerHTML;
+    const nationality = playerCard.getAttribute('data-nationality') || 'Maroc'; 
+    const club = playerCard.getAttribute('data-club') || 'FC Barcelona'; 
 
-    // إضافة مؤشر لتحديد البطاقة التي يتم تعديلها
-    form.dataset.editingCard = playerCard.dataset.id;
-}
+    form.querySelector('[name="nationality"]').value = nationality;
+    form.querySelector('[name="club"]').value = club;
 
-document.getElementById('player-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+    const flagImg = playerCard.querySelector('.flag').src;
+    const photoImg = playerCard.querySelector('.photo').src;
+    const logoImg = playerCard.querySelector('.logo').src;
 
-    const form = e.target;
-    const editingCardId = form.dataset.editingCard;
+    setPreviewImage('flagPreview', flagImg, 'Flag');
+    setPreviewImage('photoPreview', photoImg, 'Photo');
+    setPreviewImage('logoPreview', logoImg, 'Logo');
 
-    if (editingCardId) {
-        const playerCard = document.querySelector(`.cards[data-id="${editingCardId}"]`);
+    if (playerCard.querySelector('.ratingGk')) {
+        form.querySelector('[name="ratingGk"]').value = playerCard.querySelector('.ratingGk').textContent.trim();
+        form.querySelector('[name="speed"]').value = playerCard.querySelector('.speed').textContent.trim();
+        form.querySelector('[name="diving"]').value = playerCard.querySelector('.diving').textContent.trim();
+        form.querySelector('[name="positioning"]').value = playerCard.querySelector('.positioning').textContent.trim();
+        form.querySelector('[name="handling"]').value = playerCard.querySelector('.handling').textContent.trim();
+        form.querySelector('[name="kicking"]').value = playerCard.querySelector('.kicking').textContent.trim();
+        form.querySelector('[name="reflexes"]').value = playerCard.querySelector('.reflexes').textContent.trim();
 
-        playerCard.querySelector('.name').textContent = form.querySelector('[name="name"]').value;
-        playerCard.querySelector('.rating').textContent = form.querySelector('[name="rating"]').value;
-        playerCard.querySelector('.position').textContent = form.querySelector('[name="position"]').value;
-        playerCard.querySelector('.pace').textContent = form.querySelector('[name="pace"]').value;
-        playerCard.querySelector('.shooting').textContent = form.querySelector('[name="shooting"]').value;
-        playerCard.querySelector('.passing').textContent = form.querySelector('[name="passing"]').value;
-        playerCard.querySelector('.dribbling').textContent = form.querySelector('[name="dribbling"]').value;
-        playerCard.querySelector('.defending').textContent = form.querySelector('[name="defending"]').value;
-        playerCard.querySelector('.physical').textContent = form.querySelector('[name="physical"]').value;
-
-        const photoInput = form.querySelector('[name="photo"]').files[0];
-        const flagInput = form.querySelector('[name="flag"]').files[0];
-        const logoInput = form.querySelector('[name="logo"]').files[0];
-
-        if (photoInput) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                playerCard.querySelector('.photo').src = e.target.result;
-            };
-            reader.readAsDataURL(photoInput);
-        }
-
-        if (flagInput) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                playerCard.querySelector('.flag').src = e.target.result;
-            };
-            reader.readAsDataURL(flagInput);
-        }
-
-        if (logoInput) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                playerCard.querySelector('.logo').src = e.target.result;
-            };
-            reader.readAsDataURL(logoInput);
-        }
-
-        delete form.dataset.editingCard;
-
+        document.getElementById('player').classList.add('hidden');
+        document.getElementById('goalkeeper').classList.remove('hidden');
     } else {
-        addPlayerToField(form);
+        form.querySelector('[name="rating"]').value = playerCard.querySelector('.rating').textContent.trim();
+        form.querySelector('[name="pace"]').value = playerCard.querySelector('.pace').textContent.trim();
+        form.querySelector('[name="shooting"]').value = playerCard.querySelector('.shooting').textContent.trim();
+        form.querySelector('[name="passing"]').value = playerCard.querySelector('.passing').textContent.trim();
+        form.querySelector('[name="dribbling"]').value = playerCard.querySelector('.dribbling').textContent.trim();
+        form.querySelector('[name="defending"]').value = playerCard.querySelector('.defending').textContent.trim();
+        form.querySelector('[name="physical"]').value = playerCard.querySelector('.physical').textContent.trim();
+
+        document.getElementById('player').classList.remove('hidden');
+        document.getElementById('goalkeeper').classList.add('hidden');
     }
 
-    form.reset(); 
-});
+    window.scrollTo({
+        top: form.offsetTop - 20,
+        behavior: 'smooth'
+    });
 
+    form.querySelector('button[type="submit"]').textContent = 'Update Player';
+}
 
+function setPreviewImage(previewId, imageSrc, defaultText) {
+    const previewElement = document.getElementById(previewId);
+    if (imageSrc && imageSrc !== '') {
+        previewElement.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = defaultText;
+        img.classList.add('w-full', 'h-full', 'object-cover');
+        previewElement.appendChild(img);
+    } else {
+        previewElement.innerHTML = `<span class="text-gray-500 text-sm">No ${defaultText}</span>`;
+    }
+}
