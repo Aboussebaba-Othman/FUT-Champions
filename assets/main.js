@@ -1,5 +1,5 @@
 let playerCounter = 1;
-let currentEditPlayerId = null; 
+let currentEditPlayerId = null;
 
 function switchForm() {
     const position = document.getElementById('position').value;
@@ -23,9 +23,12 @@ function previewPhoto(event, previewId) {
     const file = event.target.files[0];
     const preview = document.getElementById(previewId);
 
-    preview.innerHTML = file 
-        ? `<img src="${URL.createObjectURL(file)}" alt="Preview" class="w-full h-full object-cover">`
-        : '<span class="text-gray-500 text-sm">No Image</span>';
+    if (file) {
+        preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Preview" class="w-full h-full object-cover">`;
+    } else {
+        preview.innerHTML = '<span class="text-gray-500 text-sm">No Image</span>';
+    }
+    
 }
 
 function validateForm(form) {
@@ -233,8 +236,8 @@ function editPlayer(element) {
     form.querySelector('[name="position"]').value = playerCard.querySelector('.position').textContent.trim();
     switchForm(); 
 
-    const nationality = playerCard.getAttribute('data-nationality') || 'Maroc'; 
-    const club = playerCard.getAttribute('data-club') || 'FC Barcelona'; 
+    const nationality = playerCard.getAttribute('data-nationality') ; 
+    const club = playerCard.getAttribute('data-club') ; 
 
     form.querySelector('[name="nationality"]').value = nationality;
     form.querySelector('[name="club"]').value = club;
@@ -270,12 +273,6 @@ function editPlayer(element) {
         document.getElementById('player').classList.remove('hidden');
         document.getElementById('goalkeeper').classList.add('hidden');
     }
-
-    // window.scrollTo({
-    //     top: form.offsetTop - 20,
-    //     behavior: 'smooth'
-    // });
-
     form.querySelector('button[type="submit"]').textContent = 'Update Player';
 }
 
@@ -292,4 +289,5 @@ function setPreviewImage(previewId, imageSrc, defaultText) {
         previewElement.innerHTML = `<span class="text-gray-500 text-sm">No ${defaultText}</span>`;
     }
 }
+
 
