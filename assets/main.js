@@ -38,18 +38,18 @@ function validateForm(form) {
         error.textContent = '';
     });
 
-    // Check required fields
+    
     requiredFields.forEach(field => {
         const input = form.querySelector(`[name="${field}"]`);
         if (input) {
             if (input.type === 'file') {
                 if (!currentEditPlayerId && !input.files.length) { 
-                    showError(input, `${capitalize(field)} is required.`);
+                    showError(input, `${(field)} is required.`);
                     isValid = false;
                 }
             } else {
                 if (!input.value.trim()) {
-                    showError(input, `${capitalize(field)} is required.`);
+                    showError(input, `${(field)} is required.`);
                     isValid = false;
                 }
             }
@@ -61,7 +61,7 @@ function validateForm(form) {
         if (input && !input.closest('.hidden')) { 
             const value = input.value.trim();
             if (!value || isNaN(value) || value < 10 || value > 100) {
-                showError(input, `${capitalize(field)} must be a number between 10 and 100.`);
+                showError(input, `${(field)} must be a number between 10 and 100.`);
                 isValid = false;
             }
         }
@@ -75,10 +75,6 @@ function showError(input, message) {
     if (errorElement) {
         errorElement.textContent = message;
     }
-}
-
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 function addOrUpdatePlayer(form) {
     const formData = new FormData(form);
@@ -296,3 +292,4 @@ function setPreviewImage(previewId, imageSrc, defaultText) {
         previewElement.innerHTML = `<span class="text-gray-500 text-sm">No ${defaultText}</span>`;
     }
 }
+
