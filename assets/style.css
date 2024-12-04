@@ -12,36 +12,17 @@ body {
     position: relative;
     border-radius: 5px;
 }
-
-.sidbar form {
-    margin-top: -36px;
-    margin-left: 50px;
-    width: 90%;
-    background-color: rgba(0, 0, 0, 0.372);
-    padding: 10px;
-    border-radius: 10px;
-}
 section {
     display: flex;
 }
 
-.fa-plus {
-    font-size: 30px;
-}
-.card-content{
-    position: relative;
-    background-image: url('imgs/badge_gold.webp');
-    display: flex;
-    background-repeat: no-repeat;
-    height: 100vh;
-}
-.player-image{
-    position: absolute;
-    align-items: center;
-    width: 13vw;
-    height: 22vh;
-    top: 13%;
-    left: 36px;
+
+#substitute {
+    background-color: #64656862; 
+    border: 2px  #232425; 
+    border-radius: 5px; 
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
 @media screen and (max-width: 430px) {

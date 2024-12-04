@@ -271,10 +271,10 @@ function editPlayer(element) {
         document.getElementById('goalkeeper').classList.add('hidden');
     }
 
-    window.scrollTo({
-        top: form.offsetTop - 20,
-        behavior: 'smooth'
-    });
+    // window.scrollTo({
+    //     top: form.offsetTop - 20,
+    //     behavior: 'smooth'
+    // });
 
     form.querySelector('button[type="submit"]').textContent = 'Update Player';
 }
