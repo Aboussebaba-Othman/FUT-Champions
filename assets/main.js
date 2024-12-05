@@ -82,7 +82,7 @@ function showError(input, message) {
 function addOrUpdatePlayer(form) {
     const formData = new FormData(form);
     const playerData = Object.fromEntries(formData.entries());
-
+    
     let template;
     if (playerData.position === 'GK') {
         template = document.getElementById('goalkeeper-template');
