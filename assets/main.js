@@ -292,13 +292,11 @@ function setPreviewImage(previewId, imageSrc, defaultText) {
 
 
 const raiting = Array.from(document.querySelectorAll('.rating'));
-console.log(raiting);
 let totalR = 0;
 raiting.forEach(e=>{
     console.log(e)
     const r = parseInt(e.textContent);
-    
     totalR += r;
-
+    
 });
 console.log(totalR/11);
